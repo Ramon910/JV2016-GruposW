@@ -4,8 +4,8 @@
  *  Colabora en el patron Fachada.
  *  @since: prototipo2.0
  *  @source: SimulacionesDAO.java 
- *  @version: 2.0 - 2017/03/23 
- *  @author: ajp
+ *  @version: 2.0 - 2017/05/4 
+ *  @author: jcs
  */
 
 package accesoDatos.memoria;
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import accesoDatos.OperacionesDAO;
+import modelo.ModeloException;
 import modelo.Mundo;
 import modelo.Simulacion;
 import modelo.Simulacion.EstadoSimulacion;
@@ -131,7 +132,12 @@ public class SimulacionesDAO implements OperacionesDAO {
 	 */
 	public List<Simulacion> obtenerTodasMismoUsr(String idUsr) {
 		Simulacion aux = null;
-		aux = new Simulacion();
+		try {
+			aux = new Simulacion();
+		} catch (ModeloException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		aux.setUsr(UsuariosDAO.getInstancia().obtener(idUsr));
 		//Busca posición inserción ordenada por idUsr + fecha. La última para el mismo usuario.
 		return separarSimulacionesUsr(obtenerPosicion(aux.getIdSimulacion()) - 1);
